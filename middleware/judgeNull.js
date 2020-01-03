@@ -10,14 +10,15 @@ const { ErrorModal } = require('../model/index');
 
 
 let judgeNull = (...keyList) => {
+  // console.log(keyList)
   return (req, res, next) => {  // obj表示判断的数据对象  rest就是判空的属性名
+    // console.log('1');
     const { method, body, query } = req;
     let obj = method.toUpperCase() === 'POST' ? body : query;
     for (let key in keyList) {
       let val = keyList[key];
       if (!obj[val]) {
-        res.json(new ErrorModal(`${val}不能为空`));
-        return;
+        return res.json(new ErrorModal(`${val}不能为空`));
       }
     }
     next();

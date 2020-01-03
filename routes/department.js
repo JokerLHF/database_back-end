@@ -9,11 +9,11 @@ const paginationRecord = require('../utils/pagination');
 
 // 根据系名获取具体的系信息
 router.post('/getDetailDepartment', function (req, res, next) {
-  const { departmentName, page = 1, size = 10 } = req.body;
+  const { departmentName, current = 1, size = 10 } = req.body;
   let department = getDepartmentDetail(departmentName);
   department.then(result => {
     if (result) {
-      let data = paginationRecord(result, page, size);
+      let data = paginationRecord(result, current, size);
       return res.json(new SuccessModal(data));
     }
     return res.json(new ErrorModal('查询失败'));

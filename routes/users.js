@@ -11,19 +11,20 @@ router.post('/login', judgeNull("userName", "password"), function (req, res, nex
   let loginResult = login(userName, password);
   loginResult.then(data => {
     if (data) {
-      return data.id;
+      return res.json(new SuccessModal(data));
     }
     return res.json(new ErrorModal('账号或者密码错误'))
-  }).then(userId => {
-    let permission = getPermission(userId);
-    permission.then(permission => {
-      if (permission.length) {
-        res.json(new SuccessModal(permission));
-        return;
-      }
-      return res.json(new ErrorModal('权限获取失败'))
-    })
   })
+  // .then(userId => {
+  //   let permission = getPermission(userId);
+  //   permission.then(permission => {
+  //     if (permission.length) {
+  //       res.json(new SuccessModal(permission));
+  //       return;
+  //     }
+  //     return res.json(new ErrorModal('权限获取失败'))
+  //   })
+  // })
 })
 
 module.exports = router;

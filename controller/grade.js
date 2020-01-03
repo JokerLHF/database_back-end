@@ -11,16 +11,6 @@ const getGradeDetail = (keywords) => {
 }
 
 
-// // 根据id 删除某一个年级
-// const deleteGrade = (id) => {
-//   let sql = `delete from grade where id='${id}'`
-//   return exec(sql).then(result => {
-//     if (result.affectedRows > 0) {
-//       return true;
-//     }
-//     return false;
-//   })
-// }
 
 // 修改年级  可通过修改名称
 const updateGrade = (gradeId, gradeName) => {
@@ -35,9 +25,31 @@ const updateGrade = (gradeId, gradeName) => {
 }
 
 
-module.exports = {
+// 删除年级
+const deleteGrade = (id) => {
+  let sql = `delete from grade where id='${id}'`
+  return exec(sql).then(result => {
+    if (result.affectedRows > 0) {
+      return true;
+    }
+    return false;
+  })
+}
 
+// 增加年级
+const addGrade = (gradeName, tipNumber) => {
+  let sql = `insert into grade values(null,'${gradeName}', '${tipNumber}')`;
+  return exec(sql).then(result => {
+    return {
+      id: result.insertId
+    }
+  })
+}
+
+
+module.exports = {
   getGradeDetail,
-  // deleteGrade,
-  updateGrade
+  updateGrade,
+  deleteGrade,
+  addGrade
 }
